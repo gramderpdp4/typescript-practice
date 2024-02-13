@@ -134,3 +134,17 @@ const arrNumbers: number[] = [1, 2, 3, 4, 5, 6, 7]
 console.log(restOperatorsMultipleTypes(...arrString))
 console.log(restOperatorsMultipleTypes(...arrNumbers))
 
+
+
+// Index signature: Quando não sei qual o nome da propriedade pode ser definido, podendo assim
+// Definir multiplas propriedades, porém atribuindo tipo(s)
+
+interface ICoords {
+    [index: string]: number; // Ou com type: number | string
+}
+
+const coords: ICoords = {
+    x: 10
+}
+
+coords.y = 20

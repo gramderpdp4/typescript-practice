@@ -67,3 +67,120 @@ const direction = (direction: directions) => direction;
 
 console.log(direction('top'))
 console.log(direction('right'))
+
+
+// generic funtion quando não sabemos qual tipo de dados vamos receber
+// podemos receber number, string, boolen etc
+
+/*
+const arrNumbers = <T> (obj: T[]): T[] => {
+    return obj
+}
+*/
+
+function arrGeneric<T>(obj: T[]) {
+    console.log(obj)
+}
+
+arrGeneric([1, 2, 3, 4, 5])
+arrGeneric(['1', '2', '3'])
+arrGeneric(['a', 'b', 'c'])
+arrGeneric([true, false, true, false])
+
+//Generic multiple objects
+
+function mergeObjects<T, U>(obj1: T, obj2: U) {
+   return {
+    ...obj1,
+    ...obj2
+   }
+}
+
+console.log(mergeObjects({ name: 'André' }, { age: 20, email: 'binalocom@gmail.com' }))
+
+
+function generic(obj: number[]): number[] {
+    return obj
+}
+
+console.log(generic([1, 2, 3, 4,]))
+
+
+async function init() {
+   try {
+    await getUser('12')
+   } catch (error) {
+        console.error(error)
+   }
+}
+
+function getUser(id: string): Promise<object> {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const body = new FormData();
+
+            body.append('metodo', 'get_user')
+            body.append('id', id);
+    
+            const request = await fetch('url', {
+                method: 'POST',
+                body: body
+            })
+    
+            if ( !request.ok ) throw new Error('Houve um erro na requisição da função getUser()');
+    
+            const response = await request.json();
+    
+            resolve({
+                result: response
+            })
+        } catch (error: any) {
+            reject(`Houve um erro na função getUser(). erro: ${error.message}`)
+        }
+    })
+}
+
+//Rest operator com typescript
+
+function sumAll(arr: number[]): number {
+    return arr.reduce((acc, number) => {
+       return acc + number
+    }, 0)
+}
+
+console.log(sumAll([1, 2, 3, 4, 5, 6]))
+
+
+//TIPANDO DESESTRUTURAÇÃO COM TS
+
+function showProductDetails({ name, price }: { name: string, price: number }): string {
+    return `O ${name} está custando R$${price.toFixed(2)}`;
+}
+
+const product = {
+    name: 'Notebook',
+    price: 2500
+}
+
+console.log(showProductDetails(product))
+
+
+//USANDO FUNCAO COM REST ACEITANDO VÁRIOS TIPOS E TRATANDO-OS DENTRO DA FUNÇÃO DE ACORDO COM O SEU TIPO
+type restType = string[] | number[];
+
+const restOperatorsMultipleTypes = (...rest: restType) =>  {
+    const checkType = rest.find(find => find !== undefined)
+
+    if ( typeof checkType === 'number' ) {
+        return rest.reduce<number>((acc, number) => acc * (number as number), 1)
+    } else if ( typeof checkType === 'string' ) {
+        return rest.join(' ')
+    }
+}
+
+const arrString: string[] = ['Olá', 'andré']
+const arrNumbers: number[] = [1, 2, 3, 4, 5, 6, 7]
+
+console.log(restOperatorsMultipleTypes(...arrString))
+console.log(restOperatorsMultipleTypes(...arrNumbers))
+

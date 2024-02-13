@@ -72,11 +72,6 @@ console.log(direction('right'))
 // generic funtion quando não sabemos qual tipo de dados vamos receber
 // podemos receber number, string, boolen etc
 
-/*
-const arrNumbers = <T> (obj: T[]): T[] => {
-    return obj
-}
-*/
 
 function arrGeneric<T>(obj: T[]) {
     console.log(obj)
@@ -98,57 +93,12 @@ function mergeObjects<T, U>(obj1: T, obj2: U) {
 
 console.log(mergeObjects({ name: 'André' }, { age: 20, email: 'binalocom@gmail.com' }))
 
-
 function generic(obj: number[]): number[] {
     return obj
 }
 
 console.log(generic([1, 2, 3, 4,]))
 
-
-async function init() {
-   try {
-    await getUser('12')
-   } catch (error) {
-        console.error(error)
-   }
-}
-
-function getUser(id: string): Promise<object> {
-    return new Promise( async (resolve, reject) => {
-        try {
-            const body = new FormData();
-
-            body.append('metodo', 'get_user')
-            body.append('id', id);
-    
-            const request = await fetch('url', {
-                method: 'POST',
-                body: body
-            })
-    
-            if ( !request.ok ) throw new Error('Houve um erro na requisição da função getUser()');
-    
-            const response = await request.json();
-    
-            resolve({
-                result: response
-            })
-        } catch (error: any) {
-            reject(`Houve um erro na função getUser(). erro: ${error.message}`)
-        }
-    })
-}
-
-//Rest operator com typescript
-
-function sumAll(arr: number[]): number {
-    return arr.reduce((acc, number) => {
-       return acc + number
-    }, 0)
-}
-
-console.log(sumAll([1, 2, 3, 4, 5, 6]))
 
 
 //TIPANDO DESESTRUTURAÇÃO COM TS
